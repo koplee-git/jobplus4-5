@@ -11,17 +11,17 @@ hr configure
     <div class="col-md-3">
         <h2>用户管理</h2>
         <div class="list-group">
-        <a href="{{url_for('user.resume'}}" class="list-group-item">简历查看</a>
-        <a href="{{url_for('user.resume_create'}}" class="list-group-item">职位查看</a>
-        <a href="#" class="list-group-item">添加职位</a>
+        <a href="{{url_for('user.resume_list',user_id=current_user.id)}}" class="list-group-item">简历查看</a>
+        <a href="{{url_for('user.job_list',user_id=current_user.id)}}" class="list-group-item">职位查看</a>
+        <a href="{{url_for('user.create_job',user_id=current_user.id)}}" class="list-group-item">添加职位</a>
         </div>
     </div>
     {% block index %}
     <div class="col-md-9">
-        <h2>个人简历</h2>
-            <div class="list-group-item">用户名</div>
-            <div class="list-group-item">邮箱</div>
-            <div class="list-group-item">密码</div>
+        <h2>帐号信息</h2>
+        <div class="list-group-item">用户名:{{user.username}}</div>
+        <div class="list-group-item">邮箱:{{user.email}}</div>
+        <div class="list-group-item">密码:{{user._password}}</div>
     </div>
     {% endblock%}
     {% block job %}{% endblock %}

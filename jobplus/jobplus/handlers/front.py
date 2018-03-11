@@ -24,10 +24,12 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         login_user(user, form.remember_me.data)
         if user.is_HR:
-            return redirect(url_for("user.hr_index"))
+            print("______")
+            return redirect(url_for("user.hr_index",user_id=user.id))
         elif user.is_admin:
             return redirect(url_for("admin.index"))
         else:
+            print("______")
             return redirect(url_for("user.vister_index",user_id=user.id))
     return render_template('login.html', form=form)
     

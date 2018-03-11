@@ -10,8 +10,9 @@ Admin
         <h2>管理</h2>
         <div class="list-group">
             <a href="{{url_for('admin.user')}}" class="list-group-item">用户管理</a>
-        <a href="#" class="list-group-item">职位管理</a>
+            <a href="{{url_for('admin.job')}}" class="list-group-item">职位管理</a>
         </div>
+    {% block bottom %}{% endblock %}
     </div>
     <div class="col-md-9">
         <h2>详情</h2>
@@ -19,8 +20,7 @@ Admin
         <a href="#" class="list-group-item">1</a>
         </div>
     </div>
-    {% block user %}{% endblock%}
-    {% block job %}{% endblock %}
+    {% block operation %}{% endblock%}
 </div>
 </div>
 {% endblock %}

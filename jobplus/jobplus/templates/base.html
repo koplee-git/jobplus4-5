@@ -37,7 +37,7 @@
             {% if current_user.role == 10 %}
             <li><a href="{{url_for('user.vister_index',user_id=current_user.id)}}">我的主页</a></li>
             {% elif current_user.role == 20 %}
-            <li><a href="{{url_for('user.hr_index')}}">我的主页</a></li>
+            <li><a href="{{url_for('user.hr_index',user_id=current_user.id)}}">我的主页</a></li>
             {% else %}
             <li><a href="{{url_for('admin.index')}}">我的主页</a></li>
             {% endif %} 

@@ -52,12 +52,12 @@ class Company(db.Model):
 class Job(Base):
         __tablename__ = 'job'
         id = db.Column(db.Integer, primary_key=True)
-        name = db.Column(db.String(24))
+        name = db.Column(db.String(256))
         salary = db.Column(db.Integer, nullable=False)
-        location = db.Column(db.String(24))
-        tags = db.Column(db.String(128),nullable=True)
-        experience = db.Column(db.String(32))
-        degree = db.Column(db.String(32))
+        location = db.Column(db.String(256))
+        condition = db.Column(db.String(256),nullable=True)
+        experience = db.Column(db.String(256))
+        degree = db.Column(db.String(256))
         description = db.Column(db.String(128))
         is_fulltime = db.Column(db.Boolean, default=True)
         is_open = db.Column(db.Boolean, default=True)

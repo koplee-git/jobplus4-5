@@ -1,5 +1,5 @@
 #coding:utf-8
-from jobplus.models import db,User,Resume
+from jobplus.models import db,User,Resume,Job
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, ValidationError, TextAreaField, IntegerField,SelectField
 from wtforms.validators import Length, Email, EqualTo, Required, URL, NumberRange,DataRequired
@@ -39,6 +39,11 @@ class RegisterForm(FlaskForm):
         db.session.add(user)
         db.session.commit()
         return user
+    def update_user(self, user):
+        self.populate_obj(user)
+        db.session.add(user)
+        db.session.commit()
+        return user
     def test(self):
         print("++++++++++")
 class CompanyRegisterForm(RegisterForm):
@@ -49,21 +54,54 @@ class CompanyRegisterForm(RegisterForm):
         db.session.add(user)
         db.session.commit()
         return user
-class JobInfo(FlaskForm):
-    pass
+#返回user为了后面扩展，一般创建操作都会返回创建的对象，这里可以不返回user
+class JobInfoForm(FlaskForm):
+   name = StringField('职位名称',validators=[DataRequired(),Length(3,24)])
+   description = StringField('岗位描述',validators=[DataRequired(),Length(1,256)])
+   condition = StringField('任职要求',validators=[DataRequired(),Length(1,256)])
+   location = StringField('工作地点',validators=[DataRequired(),Length(1,32)])
+   company_name = StringField('公司名称',validators=[DataRequired(),Length(3,24)])
+   salary = SelectField('薪资范围',choices=[
+       ('1','3-6k'),
+       ('2','6-9k'),
+       ('3','9-15k'),
+       ('4','15-25k')])
+   experience = SelectField('工作经验',choices=[
+       ('1','不限制'),
+       ('2','1-3年'),
+       ('3','3-5年'),
+       ('4','5-10年')])
+   degree = SelectField('学历', choices=[
+        ('1', '大专'),
+        ('2', '本科'),
+        ('3', '研究生'),
+        ('4', '博士')
+        ])
+   is_open = SelectField('职位状态',choices=[('10','上线'),('20','下线')])
+   submit = SubmitField('提交') 
+   def create_job(self,company_id):
+       job = Job(name=self.name,salary=self.salary,location=self.location,condition=self.condition,experience=self.experience,degree=self.degree,description=self.description,company_id=company_id)
+       db.session.add(job)
+       db.session.commit()
+       return job
+   def update_job(self, job):
+        self.populate_obj(job)
+        db.session.add(job)
+        db.session.commit()
+        return job
 class ResumeForm(FlaskForm):
     """普通用户简历"""
     username = StringField('姓名', validators=[DataRequired(message=""),Required(), Length(3, 24)])
     gender = SelectField('性别',choices=[('10','男'),('20','女')])
     phone = StringField('手机号码', validators=[DataRequired(),Length(11, 11, )])
     college = StringField('毕业院校', validators=[DataRequired(message='必须填写'),Length(2, 24,)])
-    degree = SelectField('学厉', choices=[
+    degree = SelectField('学历', choices=[
         ('1', '大专'),
         ('2', '本科'),
         ('3', '研究生'),
         ('4', '博士')
         ])
-    major = StringField('专业', validators=[DataRequired(message=''),Length(3, 24, message='')])
+    major = StringField('专业', validators=[DataRequired(message=''),Length(3, 24, message='专业名称全称')])
     work_year = StringField('工作经验', validators=[DataRequired(),Length(1,256)])
     experience = StringField('工作经验', validators=[DataRequired(),Length(1,256)])
     submit = SubmitField('点击更新')
