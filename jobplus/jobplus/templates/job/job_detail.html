@@ -19,16 +19,22 @@
            <div class="panel panel-info">工作地点：{{job.location}}</div>
            <div class="panel panel-warning">学历要求：{{job.degree}}</div>
            <div class="panel panel-danger">发布时间：{{job.create_at}}</div>
-        <a href="#" class="btn btn-primary btn-lg active" role="button">投递简历</a>
+           <p>{{job.current_user_is_applied}}</p>
+           {% if current_user.is_authenticated %}
+           {% if not job.current_user_is_applied %}
+           <a href="{{url_for('jobs.deliver',job_id=job.id,user_id=current_user.id)}}" class="btn btn-primary btn-lg active" role="button">投递简历</a>
 
-
+           {% else %}
+           <a href="#" class="btn btn-primary btn-lg active" role="button" disable="disable">简历已投递</a>
+            {% endif %}
+            {% else %}
+           <a href="{{url_for('front.login')}}" class="btn btn-primary btn-lg active" role="button">投递简历</a>
+           {% endif %}
         </div>
 </div>
 <div class="col-md-3">
     <a class="thumbnail">
-        <img src="{{job.job_url}}" alt="公司信息">
-        <h4>公司名称<h4>
-        <p>公司简介<P>
+        <img src="{{job.job_url}}">
         </a>
     </div>
 </div>

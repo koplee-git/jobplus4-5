@@ -1,5 +1,5 @@
 #coding:utf-8
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask import url_for
 from datetime import datetime
@@ -22,6 +22,7 @@ class User(Base,UserMixin):
 ##注册邮箱，用户用户登录
     _password = db.Column('password', db.String(256), nullable=False)
     role = db.Column(db.SmallInteger, default=ROLE_VISTER)
+    company_id = db.Column(db.Integer,db.ForeignKey('company.id'),nullable=True)
     def __repr__(self):
         return "<User:{}>".format(self.username)
     @property
@@ -38,17 +39,21 @@ class User(Base,UserMixin):
     @property
     def is_admin(self):
         return self.role == self.ROLE_ADMIN
+    @property
+    def companyid(self):
+        company=Company.query.filter_by(name=self.username).first()
+        self.company_id=company.id
+        return self.company_id
 
- 
 class Company(db.Model):
     __tablename__ = 'company'
     id = db.Column(db.Integer,primary_key=True)
-    logo_url = db.Column(db.String(256))
-    name = db.Column(db.String(32))
-    website = db.Column(db.String(32))
-    description = db.Column(db.String(128))
-    location = db.Column(db.String(32))
-
+    logo_url = db.Column(db.String(256),nullable=True)
+    name = db.Column(db.String(32),nullable=True)
+    website = db.Column(db.String(32),nullable=True)
+    description = db.Column(db.String(128),nullable=True)
+    location = db.Column(db.String(32),nullable=True)
+    user =db.relationship('User',backref='company')
 class Job(Base):
         __tablename__ = 'job'
         id = db.Column(db.Integer, primary_key=True)
@@ -66,7 +71,10 @@ class Job(Base):
         company = db.relationship('Company', uselist=False)
         def __repr__(self):
              return '<Job {}>'.format(self.name)
-
+        @property 
+        def current_user_is_applied(self):
+            d = Deliver.query.filter_by(job_id=self.id,user_id=current_user.id).first()
+            return (d is not None)
 class Resume(Base):
     __tablename__ = "resume"
     id = db.Column(db.Integer, primary_key=True)
@@ -74,7 +82,26 @@ class Resume(Base):
     name = db.Column(db.String(24))
     gender = db.Column(db.String(24))
     phone = db.Column(db.Integer)
+    college = db.Column(db.String(24))
     degree = db.Column(db.String(24))
+    major = db.Column(db.String(24))
     work_year = db.Column(db.Integer)
-    exprience = db.Column(db.String(254))
+class Deliver(Base):
+    __tablename__ ='deliver'
+    STATUS_WAITING=1
+    STATUS_REJECT=2
+    STATUS_APPCEPT=3
+    
+    id =  db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='SET NULL'))
+    job_id = db.Column(db.Integer,db.ForeignKey('job.id',ondelete='SET NULL'))
+    company_id = db.Column(db.String(24))
+    status=db.Column(db.SmallInteger,default=STATUS_WAITING)
+    response = db.Column(db.String(256))
 
+    @property
+    def user(self):
+        return User.query.get(self.user_id)
+    @property
+    def job(self):
+        return Job.query.get(self.job_id)

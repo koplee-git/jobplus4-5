@@ -1,4 +1,4 @@
-
+{% from "macros.html" import render_form %}
 {% extends "base.html" %}
 <!-- 企业用户登录首页-->
 {% block title %}
@@ -9,22 +9,25 @@ hr configure
 <div class="container">
 <div class="row">
     <div class="col-md-3">
-        <h2>用户管理</h2>
+        <h2>hello {{user.username}}</h2>
         <div class="list-group">
+        <a href="{{url_for('user.resume_list',user_id=current_user.id)}}" class="list-group-item">用户管理</a>
         <a href="{{url_for('user.resume_list',user_id=current_user.id)}}" class="list-group-item">简历查看</a>
         <a href="{{url_for('user.job_list',user_id=current_user.id)}}" class="list-group-item">职位查看</a>
         <a href="{{url_for('user.create_job',user_id=current_user.id)}}" class="list-group-item">添加职位</a>
         </div>
     </div>
-    {% block index %}
     <div class="col-md-9">
-        <h2>帐号信息</h2>
-        <div class="list-group-item">用户名:{{user.username}}</div>
-        <div class="list-group-item">邮箱:{{user.email}}</div>
-        <div class="list-group-item">密码:{{user._password}}</div>
-    </div>
+    {% block index %}
+        <h2>{{user.username}}:企业信息</h2>
+        <div class="container">
+        <p>{{ company.name }}</p>
+        <p>{{ company.website }}</p>
+        <p>{{ company.location }}</p>
+        <p>{{ company.description }}</p>
+        </div> 
     {% endblock%}
-    {% block job %}{% endblock %}
+    </div>
 </div>
 </div>
 {% endblock %}

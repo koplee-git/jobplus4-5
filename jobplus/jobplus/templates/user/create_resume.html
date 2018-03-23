@@ -5,7 +5,7 @@
 {% block body %}
 <div class="form"style="width:400px;margin:0 auto">
     <h2>求职者简历</h2>
-    {{ render_form(form, url_for('user.resume')) }}
+    {{ render_form(form, url_for('user.resume',user_id=current_user.id)) }}
     </div>
     {% endblock %}
 

@@ -10,7 +10,7 @@ front = Blueprint('front', __name__)
 @front.route('/')
 def index():
     jobs = Job.query.order_by(Job.created_at).limit(9).all()
-    companys = User.query.filter(User.role==User.ROLE_HR).order_by(User.created_at.desc()).limit(8)
+    companys = User.query.filter(User.role==User.ROLE_HR).order_by(User.created_at.desc()).limit(9)
     return render_template('index.html',
                             jobs=jobs,
                             companys=companys,
@@ -24,12 +24,10 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         login_user(user, form.remember_me.data)
         if user.is_HR:
-            print("______")
             return redirect(url_for("user.hr_index",user_id=user.id))
         elif user.is_admin:
             return redirect(url_for("admin.index"))
         else:
-            print("______")
             return redirect(url_for("user.vister_index",user_id=user.id))
     return render_template('login.html', form=form)
     
@@ -51,9 +49,7 @@ def register_vister():
 @front.route('/reigster-hr',methods=['GET','POST'])
 def register_hr():
     form = CompanyRegisterForm()
-    form.test()
     if form.validate_on_submit():
-        form.test()
         form.create_user()
         flash('注册成功，请登录！', 'success')
         return redirect(url_for('.login'))

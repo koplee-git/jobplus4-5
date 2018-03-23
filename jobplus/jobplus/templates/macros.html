@@ -55,11 +55,28 @@
         <div class="thumbnail">
         <div class="media">
             <a class="pull-left" href="{{url_for('jobs.job_detail',job_id=job.id)}}">
-            <img class="media-object" src="{{job.job_url}}" alt="...">
+            <img class="media-object" src="{{url_for('static',filename="1.jpg")}}" width='70'height="50" center alt="...">
+            <!--<img class="media-object" src="{{job.job_url}}" width='50'height="50" center alt="...">
+            -->
         </a>
         <div class="media-body">
             <h4 class="media-heading">{{job.name}}</h4>
-            <p>{{job.salary}}/{{job.experience}}/{{job.location}}<p>
+            <p>{{job.salary}}/{{job.experience}}/{{job.location}}</p>
+        </div>
+        </div>
+        </div>
+    </div>
+{% endmacro %}
+{% macro render_companys(company) %}
+    <div class="col-xs-6 col-md-4">
+        <div class="thumbnail">
+        <div class="media">
+            <a class="pull-left" href="#">
+            <img class="media-object" src="{{url_for('static',filename="1.jpg")}}" width='50'height="50" center alt="...">
+            </a>
+        <div class="media-body">
+            <h4 class="media-heading">{{company.name}}</h4>
+            <p>{{company.id}}</p>
         </div>
         </div>
         </div>

@@ -1,5 +1,6 @@
 #coding:utf-8
-from jobplus.models import db,User,Resume,Job
+from jobplus.models import db,User,Resume,Job,Company
+from flask_login import login_user, logout_user, login_required,current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, ValidationError, TextAreaField, IntegerField,SelectField
 from wtforms.validators import Length, Email, EqualTo, Required, URL, NumberRange,DataRequired
@@ -49,8 +50,11 @@ class RegisterForm(FlaskForm):
 class CompanyRegisterForm(RegisterForm):
     username = StringField('公司名', validators=[Required(), Length(3, 24)])
     def create_user(self):
+        company=Company(name=self.username.data)
+        db.session.add(company)
+        db.session.commit()
         user = User(username=self.username.data,email=self.email.data,password=self.password.data)
-        user.is_HR
+        user.role=20
         db.session.add(user)
         db.session.commit()
         return user
@@ -80,7 +84,7 @@ class JobInfoForm(FlaskForm):
    is_open = SelectField('职位状态',choices=[('10','上线'),('20','下线')])
    submit = SubmitField('提交') 
    def create_job(self,company_id):
-       job = Job(name=self.name,salary=self.salary,location=self.location,condition=self.condition,experience=self.experience,degree=self.degree,description=self.description,company_id=company_id)
+       job = Job(name=self.name.data,salary=self.salary.data,location=self.location.data,condition=self.condition.data,experience=self.experience.data,degree=self.degree.data,description=self.description.data,company_id=company_id)
        db.session.add(job)
        db.session.commit()
        return job
@@ -102,12 +106,29 @@ class ResumeForm(FlaskForm):
         ('4', '博士')
         ])
     major = StringField('专业', validators=[DataRequired(message=''),Length(3, 24, message='专业名称全称')])
-    work_year = StringField('工作经验', validators=[DataRequired(),Length(1,256)])
-    experience = StringField('工作经验', validators=[DataRequired(),Length(1,256)])
+    work_year = SelectField('工作经验', choices=[
+        ('1', '无经验'),
+        ('2', '1-3年'),
+        ('3', '3－5年'),
+        ('4', '5年以上')
+        ])
     submit = SubmitField('点击更新')
-    def creat_resume(self,user_id):
-        resume=Resume(user_id=user_id,name=self.username,gender=self.gender,phone=self.phone,degree=self.degree,work_year=self.work_year,exprience=self.exprience)
+    def create_resume(self,user_id):
+        resume=Resume(user_id=user_id,name=self.username.data,gender=self.gender.data,phone=self.phone.data,degree=self.degree.data,college=self.college.data,major=self.major.data,work_year=self.work_year.data)
 
         db.session.add(resume)
         db.session.commit()
         return resume
+class CompanyForm(FlaskForm):
+    logo_url = StringField('企业图标',validators=[DataRequired(),URL()])
+    name = StringField('企业名称',validators=[DataRequired(),Length(1,24)])
+    website = StringField('企业网站',validators=[DataRequired(),URL()])
+    description =StringField('企业简介',validators=[DataRequired(),Length(1,256)])
+    location = StringField('企业所在地',validators=[DataRequired(),Length(1,24)])
+    submit = SubmitField('点击更新')
+    def update(self):
+        pass
+
+    def validate_name(self, field):
+        if not current_user.username == field.data:
+            raise ValidationError('企业名称错误')

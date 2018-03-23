@@ -7,24 +7,18 @@ user configure
 {% block body %}
 <div class="container">
 <div class="row">
+    <h2>hello! {{current_user.username}}</h2>
     <div class="col-md-3">
-        <h2>用户管理</h2>
         <div class="list-group">
         <a href="{{url_for('user.resume',user_id=current_user.id)}}" class="list-group-item">简历更新</a>
         <a href="#" class="list-group-item">简历上传</a>
+        <a href="#" class="list-group-item">投递详情</a>
         </div>
     </div>
     <div class="col-md-9">
-        <h2>个人简历</h2>
-        <div class="list-group-item">姓名:{{user.name}}</div>
-        <div class="list-group-item">邮箱:{{user.email}}</div>
-        <div class="list-group-item">密码:{{user._passwd}}</div>
-            <div class="list-group-item">手机号</div>
-            <div class="list-group-item">学历</div>
-            <div class="list-group-item">工作年限</div>
+        {% block index %}
+        {% endblock %}
     </div>
-    {% block user %}{% endblock%}
-    {% block job %}{% endblock %}
 </div>
 </div>
 {% endblock %}
