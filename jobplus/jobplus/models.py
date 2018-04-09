@@ -16,7 +16,7 @@ class User(Base,UserMixin):
     ROLE_HR = 20
     ROLE_ADMIN = 30
     id = db.Column(db.Integer,primary_key=True)
-    username = db.Column(db.String(32), unique=True, index=True, nullable=False)
+    username = db.Column(db.String(128), unique=True, index=True, nullable=False)
 ##用户名 可以公司名或者用户名字
     email = db.Column(db.String(64), unique=True, index=True, nullable=False)
 ##注册邮箱，用户用户登录

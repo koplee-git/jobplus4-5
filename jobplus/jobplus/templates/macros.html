@@ -51,21 +51,18 @@
 </nav>
   {% endmacro %}
 {% macro render_jobs(job) %}
+<div class="row">
     <div class="col-xs-6 col-md-4">
         <div class="thumbnail">
-        <div class="media">
-            <a class="pull-left" href="{{url_for('jobs.job_detail',job_id=job.id)}}">
-            <img class="media-object" src="{{url_for('static',filename="1.jpg")}}" width='70'height="50" center alt="...">
-            <!--<img class="media-object" src="{{job.job_url}}" width='50'height="50" center alt="...">
-            -->
-        </a>
-        <div class="media-body">
-            <h4 class="media-heading">{{job.name}}</h4>
+            <img src="{{job.job_url}}" alt="..."></img>
+        <div class="caption">
+            <h3>{{job.name}}</h3>
             <p>{{job.salary}}/{{job.experience}}/{{job.location}}</p>
-        </div>
-        </div>
+            <p><span class="btn btn-primary" role="button">投递简历</span><a href="{{url_for('jobs.job_detail',job_id=job.id)}}" class="btn btn-default" role="button">查看更多</a></p>
         </div>
     </div>
+    </div>
+
 {% endmacro %}
 {% macro render_companys(company) %}
     <div class="col-xs-6 col-md-4">

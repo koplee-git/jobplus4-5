@@ -8,25 +8,18 @@
          <p><a class="btn btn-primary btn-lg" href="#" role="button">Go</a></p>
          </div>
          </div>
-
-<ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#">热门职位</a></li>
+ <div class="alert alert-info" role="alert">热门岗位</div>
     <li>
     {% for job in jobs %}
         {{render_jobs(job)}}
     {% endfor %}
     </li>
-</ul>
-
-    <div class="row">
-<ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#">热门公司</a></li>
+ <div class="alert alert-info" role="alert">热门公司</div>
     <li>
     {% for company in companys %}
         {{render_companys(company)}}
     {% endfor %}
     </li>
-</ul>
 </div>
 {% endblock %}
 {% block js_css %}

@@ -1,0 +1,22 @@
+2018-04-03 20:35:23,884 CRIT Supervisor running as root (no user in config file)
+2018-04-03 20:35:23,886 INFO daemonizing the supervisord process
+2018-04-03 20:35:23,887 INFO supervisord started with pid 1461
+2018-04-03 20:35:24,889 INFO spawned: 'jobplus' with pid 1462
+2018-04-03 20:35:26,288 INFO success: jobplus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-04-03 20:59:34,720 CRIT Supervisor running as root (no user in config file)
+2018-04-03 20:59:34,722 INFO daemonizing the supervisord process
+2018-04-03 20:59:34,722 INFO supervisord started with pid 1605
+2018-04-03 20:59:35,752 INFO spawned: 'djangotest' with pid 1606
+2018-04-03 20:59:37,313 INFO success: djangotest entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-04-03 21:00:10,868 INFO exited: jobplus (terminated by SIGKILL; not expected)
+2018-04-03 21:00:10,869 INFO spawned: 'jobplus' with pid 1618
+2018-04-03 21:00:12,248 INFO success: jobplus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-04-03 21:01:36,799 INFO exited: jobplus (terminated by SIGKILL; not expected)
+2018-04-03 21:01:36,800 INFO spawned: 'jobplus' with pid 1635
+2018-04-03 21:01:38,164 INFO success: jobplus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-04-03 21:02:22,360 INFO exited: jobplus (terminated by SIGKILL; not expected)
+2018-04-03 21:02:22,361 INFO spawned: 'jobplus' with pid 1653
+2018-04-03 21:02:23,660 INFO success: jobplus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-04-03 21:03:00,691 INFO exited: jobplus (terminated by SIGKILL; not expected)
+2018-04-03 21:03:00,692 INFO spawned: 'jobplus' with pid 1669
+2018-04-03 21:03:02,044 INFO success: jobplus entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

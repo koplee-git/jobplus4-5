@@ -7,47 +7,61 @@ fake = Faker()
 
 
 def iter_user_data():
-        with open(os.path.join(os.path.dirname(__file__), 'company.json')) as f:
+        with open('./scripts/getjob.json','r',encoding="utf-8") as f:
             job_datas = json.load(f)
             for job in job_datas:
+                if User.query.filter_by(username=job['job_company']).first():
+                    print("ok")
+                    continue
                 yield User(
-                    username=fake.name(),
+                    username=job['job_company'],
                     email=fake.email(),
                     password='123456',
                     role=User.ROLE_VISTER)
 def iter_company_data():      
-        with open(os.path.join(os.path.dirname(__file__), 'company.json')) as f:
+        with open('./scripts/getjob.json','r',encoding="utf-8") as f:
             company_datas = json.load(f)
             for company in company_datas:
-                yield Company(
-                        name=company['name'],
-                        location=fake.city_suffix(),
-                        logo_url=company['logo_url'],
+                if company.get('company_logo'):
+                    yield Company(
+                        name=company.get('job_company'),
+                        location=company.get('job_station'),
+                        logo_url='http:'+ company.get('company_logo'),
                         website=fake.url(),
-                        description=fake.text(),
+                        description=company.get('company_description'),
+                        )
+                else:
+                    yield Company(
+                        name=company.get('job_company'),
+                        location=company.get('job_station'),
+                        logo_url=company.get('company_logo'),
+                        website=fake.url(),
+                        description=company.get('company_description'),
                         )
 def iter_job_data():
-        with  open(os.path.join(os.path.dirname(__file__), 'job.json')) as f:
+        with open('./scripts/getjob.json','r',encoding="utf-8") as f:
             job_datas = json.load(f)
             for job in job_datas:
                 yield   Job(
                 
-                        name=job['name'],
+                        name=job['job_name'],
                         
-                        salary=job['salary'],
+                        salary=job['job_salary'],
                         
-                        experience=job['experience'],
+                        experience=job['job_experence'],
                         
-                        location=job['location'],
+                        location=job['job_station'],
                         
-                        degree=job['degree'],
+                        degree=job['job_degree'],
                         
-                        description=fake.text(),
-                        job_url = job['img_url']
+                        description=job['job_description'],
+                        job_url = fake.url()
                         )
 def run():
+    print("run")
     for job in iter_job_data():
         try:
+            print("add")
             #db.session.add(user)
             #db.session.add(company)
             db.session.add(job)
@@ -66,3 +80,6 @@ def run():
             
         print(e)
         db.session.rollback()
+
+if __name__ == "__main__":
+    run()
