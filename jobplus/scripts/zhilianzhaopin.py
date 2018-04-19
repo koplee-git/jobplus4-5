@@ -27,7 +27,6 @@ def pares_index(url):
         for item in doc('.newlist .zwmc a').items():
             yield item.attr('href')
 def get_detail(url):
-    print(url)
     response = requests.get(url)
     if response.status_code == 200:
         doc=pq(response.text)
@@ -40,7 +39,7 @@ def get_detail(url):
                     'job_name': doc('.inner-left h1').text(),
                     'job_company':doc('.inner-left h2').text(),
                     'job_description':doc('.tab-inner-cont').eq(0)('p').text(),
-                    'company_description':doc('.tab-inner-cont').eq(1).text(),
+                    'company_description':doc('.tab-inner-cont').eq(1).remove('a').text(),
                     'company_logo':doc('.img-border img').attr("src")
                     }
 def write_json(item, name):
@@ -54,18 +53,16 @@ def main(kw):
     i =0
     lst=[]
     url = start_url(jl,kw,num)
-    print(url)
     get_next_index(url)
     for url in urllst:
         for url in pares_index(url):
             for item in get_detail(url):
                 lst.append(item)
                 i +=1
-    print(lst[1])
     print(len(lst))
     write_json(lst,kw)
     print(kw,"相关工作岗位:",i)
 if __name__ == "__main__":
-    for kw in ['python','java','php','前端','android']:
+    for kw in ['python','java','php','前端','android','c#','.net']:
         urllst=[]
         main(kw)

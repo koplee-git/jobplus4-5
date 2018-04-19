@@ -12,13 +12,12 @@
       <div class="panel-heading">{{job.name}}</div>
           <div class="panel-body">
               <p>职位指责：{{job.description}}</p>
-              <p>职位指责：{{job.description}}</p>
            </div>
-           <div class="panel panel-primary">薪资：{{job.sarary}}</div>
-           <div class="panel panel-success">工作经验：{{job.expeirence}}</div>
+           <div class="panel panel-primary">薪资：{{job.salary}}</div>
+           <div class="panel panel-success">工作经验：{{job.experience}}</div>
            <div class="panel panel-info">工作地点：{{job.location}}</div>
            <div class="panel panel-warning">学历要求：{{job.degree}}</div>
-           <div class="panel panel-danger">发布时间：{{job.create_at}}</div>
+           <div class="panel panel-danger">发布时间：{{job.created_at}}</div>
            <p>{{job.current_user_is_applied}}</p>
            {% if current_user.is_authenticated %}
            {% if not job.current_user_is_applied %}

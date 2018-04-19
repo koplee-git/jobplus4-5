@@ -1,28 +1,50 @@
 {% extends "base.html" %}
 {% from "macros.html" import render_pagination,render_jobs,render_companys %}
+{% block css_source %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for("static",filename="style.css")}}" />
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+{% endblock %}
 {% block body %}
- <div class="jumbotron">
-    <div class="container">
-         <h1>JOBPLUS4-5</h1>
-         <p>好工作尽在jobplus</p>
-         <p><a class="btn btn-primary btn-lg" href="#" role="button">Go</a></p>
-         </div>
-         </div>
+
+    <div class="imageSlider">
+        <div class="imageBox">
+            <a href="#" target="_blank"><img src="{{url_for("static",filename="1.png")}}" /></a>
+            <a href="#" target="_blank"><img src="{{url_for("static",filename="2.jpg")}}" /></a>
+            <a href="#" target="_blank"><img src="{{url_for("static",filename="3.jpg")}}" /></a>
+            <a href="#" target="_blank"><img src="{{url_for("static",filename="4.jpg")}}" /></a>
+        </div>
+        <div class="titleBox">
+            <p class="active"><span>image 1</span></p>
+            <p>image 2</p>
+            <p>image 3</p>
+            <p>image 4</p>
+        </div>
+        <div class="icoBox">
+            <span class="active" rel="1">1</span>
+            <span rel="2">2</span>
+            <span rel="3">3</span>
+            <span rel="4">4</span>
+        </div>
+    </div>
+<div class="container">
+
  <div class="alert alert-info" role="alert">热门岗位</div>
-    <li>
+ <div class="row" >
     {% for job in jobs %}
         {{render_jobs(job)}}
     {% endfor %}
-    </li>
- <div class="alert alert-info" role="alert">热门公司</div>
-    <li>
+ </div>
+ <div class="alert alert-info" role="alert" >热门公司</div>
+ <div class="row" >
     {% for company in companys %}
         {{render_companys(company)}}
     {% endfor %}
-    </li>
+ </div>
 </div>
 {% endblock %}
 {% block js_css %}
 {{ super() }}
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="{{url_for("static",filename="main.js")}}"></script>
 {% endblock %}

@@ -1,6 +1,6 @@
 #coding:utf-8
 from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
-from jobplus.models import  User
+from jobplus.models import  User,Company
 from jobplus.forms import LoginForm,RegisterForm,CompanyRegisterForm
 from flask_login import login_user, logout_user, login_required
 from jobplus.models import Job
@@ -10,11 +10,12 @@ front = Blueprint('front', __name__)
 @front.route('/')
 def index():
     jobs = Job.query.order_by(Job.created_at).limit(9).all()
-    companys = User.query.filter(User.role==User.ROLE_HR).order_by(User.created_at.desc()).limit(9)
+    companys = Company.query.order_by(Company.id).limit(9).all()
+    #companys = User.query.filter(User.role==User.ROLE_HR).order_by(User.created_at.desc()).limit(9)
     return render_template('index.html',
                             jobs=jobs,
                             companys=companys,
-                                                     )
+                                                   )
 #登录时会判断用户的角色
 
 @front.route('/login', methods=['GET', 'POST'])

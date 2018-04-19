@@ -51,29 +51,40 @@
 </nav>
   {% endmacro %}
 {% macro render_jobs(job) %}
-<div class="row">
     <div class="col-xs-6 col-md-4">
+    <div class="center-block">
         <div class="thumbnail">
-            <img src="{{job.job_url}}" alt="..."></img>
+            <img src="{{job.job_url}}">
         <div class="caption">
-            <h3>{{job.name}}</h3>
+            <h4>{{job.name}}</h4>
             <p>{{job.salary}}/{{job.experience}}/{{job.location}}</p>
-            <p><span class="btn btn-primary" role="button">投递简历</span><a href="{{url_for('jobs.job_detail',job_id=job.id)}}" class="btn btn-default" role="button">查看更多</a></p>
+            {% if not current_app %}
+            <p><a class="btn btn-primary" role="button" href="/login">投递简历</a><a href="{{url_for('jobs.job_detail',job_id=job.id)}}" class="btn btn-default" role="button">查看更多</a></p>
+            {% else %}
+            <p>
+            <a class="btn btn-primary" role="button" href="{{url_for('jobs.deliver',user_id=current_app,job_id=job.id)}}">投递简历</a>
+            <a href="{{url_for('jobs.job_detail',job_id=job.id)}}" class="btn btn-default" role="button">查看更多</a>
+            </p>
+            {% endif %}
+        </div>
         </div>
     </div>
-    </div>
+ </div>
 
 {% endmacro %}
 {% macro render_companys(company) %}
     <div class="col-xs-6 col-md-4">
-        <div class="thumbnail">
+        <div class="thumbnail" style="height:300px">
         <div class="media">
-            <a class="pull-left" href="#">
+            <h4 class="media-heading">{{company.name}}</h4>
+            <a class="pull-center" href="#">
+            <img src="{{company.logo_url}}">
+            <!--
             <img class="media-object" src="{{url_for('static',filename="1.jpg")}}" width='50'height="50" center alt="...">
+            -->
             </a>
         <div class="media-body">
-            <h4 class="media-heading">{{company.name}}</h4>
-            <p>{{company.id}}</p>
+         <a href="{{url_for('companys.company_detail',id=company.id)}}" class="btn btn-primary" role="button">查看更多</a>
         </div>
         </div>
         </div>

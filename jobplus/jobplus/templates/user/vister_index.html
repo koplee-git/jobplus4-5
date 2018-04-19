@@ -17,6 +17,70 @@ user configure
     </div>
     <div class="col-md-9">
         {% block index %}
+<div class="panel panel-primary">
+  <div class="panel-heading">姓名：</div>
+  <div class="panel-body">
+    {{resume.name}}
+  </div>
+</div>
+<div class="panel panel-success">
+  <div class="panel-heading">性别:</div>
+  {% if resume==1 %}
+  <div class="panel-body">
+    男
+  </div>
+  {% else %}
+  <div class="panel-body">女</div>
+   {% endif %}
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading"> 电话：</div>
+  <div class="panel-body">
+{{resume.phone}}
+  </div>
+</div>
+<div class="panel panel-warning">
+  <div class="panel-heading">毕业院校</div>
+  <div class="panel-body">
+    {{resume.college}}
+  </div>
+</div>
+<div class="panel panel-primary">
+  <div class="panel-heading">学历:</div>
+  {% if resume.degree==1 %}
+  <div class="panel-body">
+    大专
+  {% elif resume.degree==2 %}
+  <div class="panel-body">
+    本科
+  {% elif resume.degree==1 %}
+  <div class="panel-body">
+    研究生
+  {% else %}
+  <div class="panel-body">
+    博士
+  {% endif %}
+  </div>
+</div>
+<div class="panel panel-success">
+  <div class="panel-heading">专业：</div>
+  <div class="panel-body">
+    {{resume.major}}
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">工作年限</div>
+  <div class="panel-body">
+    {{resume.work_year}}
+  </div>
+</div>
+<div class="panel panel-warning">
+  <div class="panel-heading">工作描述</div>
+  <div class="panel-body">
+    {{resume.description}}
+  </div>
+</div>
+
         {% endblock %}
     </div>
 </div>

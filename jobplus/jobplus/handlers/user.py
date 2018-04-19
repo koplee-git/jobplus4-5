@@ -12,10 +12,13 @@ user = Blueprint('user', __name__, url_prefix='/user')
 @user.route('/vister/<user_id>')
 def vister_index(user_id):
     """普通用户帐号信息"""
+    resume = Resume.query.filter_by(id=user_id).first()
+    if resume:
    # user_id = current_user.id
-    user = User.query.filter_by(id=user_id).first()
-    return render_template('user/vister_index.html',user=user)
-
+        user = User.query.filter_by(id=user_id).first()
+        return render_template('user/vister_index.html',user=user,resume=resume)
+    else:
+        redirect(url_for('user.resume',user_id=user_id))
 @vister_required
 @user.route('/vister/<user_id>/createresume',methods=['GET','POST'])
 def resume(user_id):
