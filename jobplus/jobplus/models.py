@@ -41,6 +41,7 @@ class User(Base,UserMixin):
         return self.role == self.ROLE_ADMIN
     @property
     def companyid(self):
+        """ 默认是企业用用名称是企业名字"""
         company=Company.query.filter_by(name=self.username).first()
         self.company_id=company.id
         return self.company_id
@@ -81,7 +82,7 @@ class Resume(Base):
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
     name = db.Column(db.String(24))
     gender = db.Column(db.String(24))
-    phone = db.Column(db.Integer)
+    phone = db.Column(db.String(11))
     college = db.Column(db.String(24))
     degree = db.Column(db.String(24))
     major = db.Column(db.String(24))

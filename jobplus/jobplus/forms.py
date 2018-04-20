@@ -95,9 +95,9 @@ class JobInfoForm(FlaskForm):
         return job
 class ResumeForm(FlaskForm):
     """普通用户简历"""
-    username = StringField('姓名', validators=[DataRequired(message=""),Required(), Length(3, 24)])
+    name = StringField('姓名', validators=[DataRequired(message=""),Required(), Length(3, 24)])
     gender = SelectField('性别',choices=[('10','男'),('20','女')])
-    phone = StringField('手机号码', validators=[DataRequired(),Length(11, 11, )])
+    phone = StringField('手机号码', validators=[DataRequired(),Length(3, 12)])
     college = StringField('毕业院校', validators=[DataRequired(message='必须填写'),Length(2, 24,)])
     degree = SelectField('学历', choices=[
         ('1', '大专'),
@@ -113,9 +113,13 @@ class ResumeForm(FlaskForm):
         ('4', '5年以上')
         ])
     submit = SubmitField('点击更新')
-    def create_resume(self,user_id):
+    def create_resume(self,resume):
         resume=Resume(user_id=user_id,name=self.username.data,gender=self.gender.data,phone=self.phone.data,degree=self.degree.data,college=self.college.data,major=self.major.data,work_year=self.work_year.data)
-
+        db.session.add(resume)
+        db.session.commit()
+        return resume
+    def update_resume(self, resume):
+        self.populate_obj(resume)
         db.session.add(resume)
         db.session.commit()
         return resume

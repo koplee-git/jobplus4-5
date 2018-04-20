@@ -58,14 +58,7 @@
         <div class="caption">
             <h4>{{job.name}}</h4>
             <p>{{job.salary}}/{{job.experience}}/{{job.location}}</p>
-            {% if not current_app %}
-            <p><a class="btn btn-primary" role="button" href="/login">投递简历</a><a href="{{url_for('jobs.job_detail',job_id=job.id)}}" class="btn btn-default" role="button">查看更多</a></p>
-            {% else %}
-            <p>
-            <a class="btn btn-primary" role="button" href="{{url_for('jobs.deliver',user_id=current_app,job_id=job.id)}}">投递简历</a>
             <a href="{{url_for('jobs.job_detail',job_id=job.id)}}" class="btn btn-default" role="button">查看更多</a>
-            </p>
-            {% endif %}
         </div>
         </div>
     </div>

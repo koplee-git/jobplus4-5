@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_form %}
+{% block title %}Register-Vister{% endblock %}
+
+{% block body %}
+<div class="form"style="width:400px;margin:0 auto">
+    <h2>求职者简历</h2>
+    {{ render_form(form, url_for('user.updateresume',user_id=current_user.id)) }}
+    </div>
+{% endblock %}

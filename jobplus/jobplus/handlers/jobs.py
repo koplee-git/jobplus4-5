@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
 from jobplus.models import  User,Job,Deliver,db
 from jobplus.forms import LoginForm,RegisterForm,CompanyRegisterForm
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required,current_user
 from jobplus.decorators import vister_required
 
 jobs = Blueprint('jobs',__name__,url_prefix='/jobs')

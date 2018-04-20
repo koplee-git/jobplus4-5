@@ -25,9 +25,31 @@
             <span rel="4">4</span>
         </div>
     </div>
+<div class="container">
+<ul class="nav nav-tabs" id="myTab">
+  <li><a href="#home" >公司介绍</a></li>
+  <li><a href="#profile" >在招职位</a></li>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="home">{{company.name}}</div>
+  <div class="tab-pane" id="profile">
+  {% for job in jobs %}
+    {{job.name}}
+  {% endfor %}
+  </div>
+</div>
+</div>
     {% endblock %}
     {% block js_css %}
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{{url_for("static",filename="main.js")}}"></script>
+<script type="text/javascript">
+ $('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>
     {% endblock %}
-</html>
